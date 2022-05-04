@@ -1,0 +1,13 @@
+#!/usr/bin/fift -s
+"TonUtil.fif" include
+"Asm.fif" include
+
+."nft-collection-editable-mystery-box:" cr
+
+"nft-collection-editable-mystery-box-code.fif" include
+2 boc+>B dup Bx. cr cr
+
+."nft-item-mystery-box:" cr
+
+"nft-item-mystery-box-code.fif" include
+2 boc+>B dup Bx. cr cr
