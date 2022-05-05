@@ -117,7 +117,7 @@ int min_tons_for_storage() asm "50000000 PUSHINT"; ;; 0.05 TON
     (int init?, int index, slice collection_address, slice owner_address, cell content, int is_unboxed) = load_data();
     if (~ init?) {
       throw_unless(405, equal_slices(collection_address, sender_address));
-      store_data(index, collection_address, in_msg_body~load_msg_addr(), in_msg_body~load_ref(), 0);
+      store_data(index, collection_address, in_msg_body~load_msg_addr(), in_msg_body~load_ref(), 0); ;; 0 means that mystery box hasn't been opened yet
       return ();
     }
 
@@ -132,11 +132,12 @@ int min_tons_for_storage() asm "50000000 PUSHINT"; ;; 0.05 TON
       send_msg(sender_address, 0, op::report_static_data(), query_id, begin_cell().store_uint(index, 256).store_slice(collection_address), 64);  ;; carry all the remaining value of the inbound message
       return ();
     }
-    if (op == op::unbox()) { ;; send message to collection to generate a new random content for current nft
+    if (op == op::unbox()) { ;; send message to collection to generate a new random content for mystery box
+      throw_if(405, is_unboxed); ;; throw an error if mystery box has already been opened 
       send_msg(collection_address, 0, op::unbox(), query_id, begin_cell().store_uint(index, 64), 1); ;; paying fees, revert on errors
       return ();
     }
-    if (op == op::edit_content()) {
+    if (op == op::edit_content()) { ;; change the content
       throw_unless(410, equal_slices(sender_address, collection_address));
       store_data(index, collection_address, owner_address, in_msg_body~load_ref(), -1); ;; -1 means that mystery box is opened
       return ();
