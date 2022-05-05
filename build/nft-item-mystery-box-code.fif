@@ -174,15 +174,15 @@ PROGRAM{
       3 BLKDROP	// 
     }>	//  my_balance in_msg_body cs
     LDMSGADDR	//  my_balance in_msg_body sender_address cs
-    LDMSGADDR	//  my_balance in_msg_body sender_address _91 _90
+    LDMSGADDR	//  my_balance in_msg_body sender_address _93 _92
     NIP	//  my_balance in_msg_body sender_address cs
-    LDVARUINT16	//  my_balance in_msg_body sender_address _93 _92
+    LDVARUINT16	//  my_balance in_msg_body sender_address _95 _94
     NIP	//  my_balance in_msg_body sender_address cs
     1 PUSHINT	//  my_balance in_msg_body sender_address cs _21=1
     SDSKIPFIRST	//  my_balance in_msg_body sender_address cs
-    LDVARUINT16	//  my_balance in_msg_body sender_address _95 _94
-    NIP	//  my_balance in_msg_body sender_address cs
     LDVARUINT16	//  my_balance in_msg_body sender_address _97 _96
+    NIP	//  my_balance in_msg_body sender_address cs
+    LDVARUINT16	//  my_balance in_msg_body sender_address _99 _98
     DROP	//  my_balance in_msg_body sender_address fwd_fee
     load_data CALLDICT	//  my_balance in_msg_body sender_address fwd_fee init? index collection_address owner_address content is_unboxed
     s0 s5 XCHG	//  my_balance in_msg_body sender_address fwd_fee is_unboxed index collection_address owner_address content init?
@@ -196,7 +196,7 @@ PROGRAM{
       405 THROWIFNOT
       SWAP	//  collection_address index in_msg_body
       LDMSGADDR	//  collection_address index _39 in_msg_body
-      LDREF	//  collection_address index _39 _107 _106
+      LDREF	//  collection_address index _39 _109 _108
       DROP	//  collection_address index _39 _41
       s2 s3 XCHG
       0 PUSHINT	//  index collection_address _39 _41 _43=0
@@ -217,62 +217,63 @@ PROGRAM{
       s0 s2 XCHG	//  my_balance index collection_address owner_address content is_unboxed sender_address query_id in_msg_body fwd_fee
       transfer_ownership INLINECALLDICT
     }>	//  my_balance content sender_address fwd_fee is_unboxed index collection_address owner_address op query_id in_msg_body
-    s6 POP
-    s6 POP
     s7 POP
-    s7 POP	//  owner_address op sender_address query_id in_msg_body index collection_address
-    0x2fcb26a2 PUSHINT	//  owner_address op sender_address query_id in_msg_body index collection_address _56
-    s6 s(-1) PUXC	//  owner_address op sender_address query_id in_msg_body index collection_address op _56
-    EQUAL	//  owner_address op sender_address query_id in_msg_body index collection_address _57
-    IFJMP:<{	//  owner_address op sender_address query_id in_msg_body index collection_address
-      s2 POP
-      s4 POP
-      s4 POP	//  collection_address index sender_address query_id
-      0 PUSHINT	//  collection_address index sender_address query_id _58=0
-      0x8b771735 PUSHINT	//  collection_address index sender_address query_id _58=0 _59
-      s0 s4 XCHG
-      NEWC	//  collection_address _59 sender_address query_id _58=0 index _60
-      256 STU	//  collection_address _59 sender_address query_id _58=0 _62
-      s0 s5 XCHG2	//  _58=0 _59 sender_address query_id _62 collection_address
-      STSLICER	//  _58=0 _59 sender_address query_id _63
-      s2 s4 XCHG
-      s2 s3 XCHG
+    s8 POP
+    s8 POP	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address
+    0x2fcb26a2 PUSHINT	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address _56
+    s8 s(-1) PUXC	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address op _56
+    EQUAL	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address _57
+    IFJMP:<{	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address
+      DROP
+      2 2 BLKDROP2
+      s4 POP	//  collection_address query_id sender_address index
+      0 PUSHINT	//  collection_address query_id sender_address index _58=0
+      0x8b771735 PUSHINT	//  collection_address query_id sender_address index _58=0 _59
+      s0 s2 XCHG
+      NEWC	//  collection_address query_id sender_address _59 _58=0 index _60
+      256 STU	//  collection_address query_id sender_address _59 _58=0 _62
+      s0 s5 XCHG2	//  _58=0 query_id sender_address _59 _62 collection_address
+      STSLICER	//  _58=0 query_id sender_address _59 _63
+      s1 s4 s0 XCHG3
+      s1 s3 XCHG
       64 PUSHINT	//  sender_address _58=0 _59 query_id _63 _64=64
       send_msg INLINECALLDICT
-    }>	//  owner_address op sender_address query_id in_msg_body index collection_address
-    0x1a0b9d52 PUSHINT	//  owner_address op sender_address query_id in_msg_body index collection_address _66
-    s6 s(-1) PUXC	//  owner_address op sender_address query_id in_msg_body index collection_address op _66
-    EQUAL	//  owner_address op sender_address query_id in_msg_body index collection_address _67
-    IFJMP:<{	//  owner_address op sender_address query_id in_msg_body index collection_address
-      s2 POP
-      3 3 BLKDROP2	//  query_id collection_address index
-      0 PUSHINT	//  query_id collection_address index _68=0
-      0x1a0b9d52 PUSHINT	//  query_id collection_address index _68=0 _69
+    }>	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address
+    0x1a0b9d52 PUSHINT	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address _66
+    s8 s(-1) PUXC	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address op _66
+    EQUAL	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address _67
+    IFJMP:<{	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address
+      DROP
+      s3 POP
+      s3 POP
+      s4 POP	//  is_unboxed query_id index collection_address
+      s0 s3 XCHG	//  collection_address query_id index is_unboxed
+      405 THROWIF
+      0 PUSHINT	//  collection_address query_id index _70=0
+      0x1a0b9d52 PUSHINT	//  collection_address query_id index _70=0 _71
       s0 s2 XCHG
-      NEWC	//  query_id collection_address _69 _68=0 index _70
-      64 STU	//  query_id collection_address _69 _68=0 _72
+      NEWC	//  collection_address query_id _71 _70=0 index _72
+      64 STU	//  collection_address query_id _71 _70=0 _74
       s1 s3 XCHG
-      s1 s4 XCHG
-      1 PUSHINT	//  collection_address _68=0 _69 query_id _72 _73=1
+      1 PUSHINT	//  collection_address _70=0 _71 query_id _74 _75=1
       send_msg INLINECALLDICT
-    }>	//  owner_address op sender_address query_id in_msg_body index collection_address
-    s3 POP	//  owner_address op sender_address collection_address in_msg_body index
-    0x1a0b9d51 PUSHINT	//  owner_address op sender_address collection_address in_msg_body index _75
-    s1 s5 XCHG	//  owner_address index sender_address collection_address in_msg_body op _75
-    EQUAL	//  owner_address index sender_address collection_address in_msg_body _76
-    IFJMP:<{	//  owner_address index sender_address collection_address in_msg_body
-      s2 s1 XCPU	//  owner_address index in_msg_body collection_address sender_address collection_address
-      SDEQ	//  owner_address index in_msg_body collection_address _78
+    }>	//  op query_id sender_address in_msg_body is_unboxed index collection_address owner_address
+    s3 POP
+    s5 POP	//  op collection_address sender_address in_msg_body owner_address index
+    0x1a0b9d51 PUSHINT	//  op collection_address sender_address in_msg_body owner_address index _77
+    s1 s6 XCHG	//  index collection_address sender_address in_msg_body owner_address op _77
+    EQUAL	//  index collection_address sender_address in_msg_body owner_address _78
+    IFJMP:<{	//  index collection_address sender_address in_msg_body owner_address
+      s2 s3 XCPU	//  index collection_address owner_address in_msg_body sender_address collection_address
+      SDEQ	//  index collection_address owner_address in_msg_body _80
       410 THROWIFNOT
-      SWAP	//  owner_address index collection_address in_msg_body
-      LDREF	//  owner_address index collection_address _113 _112
-      DROP	//  owner_address index collection_address _80
-      s1 s3 s0 XCHG3
-      -1 PUSHINT	//  index collection_address owner_address _80 _82=-1
+      LDREF	//  index collection_address owner_address _115 _114
+      DROP	//  index collection_address owner_address _82
+      -1 PUSHINT	//  index collection_address owner_address _82 _84=-1
       store_data CALLDICT
-    }>	//  owner_address index sender_address collection_address in_msg_body
+    }>	//  index collection_address sender_address in_msg_body owner_address
     5 BLKDROP	// 
-    16 PUSHPOW2DEC	//  _84=65535
+    16 PUSHPOW2DEC	//  _86=65535
     THROWANY
   }>
   get_nft_data PROC:<{
